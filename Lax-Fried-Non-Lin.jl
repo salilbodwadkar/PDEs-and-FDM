@@ -1,5 +1,6 @@
 function lax_friedrich_scheme(u0, dx, dt, t_final, f)
-  
+   #u0 is initial condition matrix, c is velocity, dx and dt are space and time steps repsectively, f is flux function
+
     n = length(u0)
   
     nt = Int(t_final / dt)
