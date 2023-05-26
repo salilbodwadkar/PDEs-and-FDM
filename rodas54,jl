@@ -2,7 +2,7 @@ function rodas54(f, u0, a,b,N)
     
     h = (b-a)/N
     t = collect(a:h:b)
-    u = zeros(length(u0), n)
+    u = zeros(length(u0), N)
     u[:, 1] = u0
 
     # Butcher table for Rodas 5(4) method
@@ -18,7 +18,7 @@ function rodas54(f, u0, a,b,N)
     b = [82889/524892, 0, 15625/83664, 69875/102672, -2260/8211, 1/4]
     bhat = [4586570599/29645900160, 0, 178811875/945068544, 814220225/1159782912, -3700637/11593932, 61727/225920]
 
-    for i in 1:n-1
+    for i in 1:N-1
         u_new = u[:, i]
         t_new = t[i]
 
