@@ -1,4 +1,5 @@
 function downwind_scheme(u0, c, dx, dt, t_final)
+    # u0 is initial condition matrix, c is velocity, dx and dt are space and time steps repsectively
     n = length(u0)
 
     nt = Int(t_final / dt)
