@@ -1,4 +1,4 @@
-function rk4(f, a, b, alpha, N)
+function rk4(f, a, b, u0, N)
     # Solve ODE y'(t) = f(t, y(t)) using Runge-Kutta 4.
     h = (b - a) / N
     t = collect(a:h:b)
