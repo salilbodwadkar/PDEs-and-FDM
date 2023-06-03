@@ -1,14 +1,23 @@
-function downwind_adv(u0, c, dx, dt, t_final)
-    # u0 is initial condition matrix, c is velocity, dx and dt are space and time steps repsectively
-    n = length(u0)
+function downwind_adv(u0, c, L, N, dt, t_final)
+    #u0 is initial traffic density, c is advection velocity, L is road legnth, N is # of grid points, dt is time step
+    using Plots
+    
+    dx = L / N
+    x = range(0, L, length=N+1)
 
-    nt = Int(t_final / dt)
-  
-    u = zeros(n, nt+1)
-    u[:, 1] = u0
+    #downwind scheme for linear advection
+    u = copy(u0)
+    plot(x, u, xlim=(0, L), ylim=(0, 2), xlabel="Position", ylabel="Density", title="Traffic Density at Time t = 0")
 
-    for i in 1:nt
-        u[:, i+1] = u[:, i] - c * dt / dx * (u[:, i] - u[mod1.(1:n-1, n), i])
+    for t in 0:dt:t_final
+        u_next = zeros(N+1)
+        for i in 2:N
+            u_next[i] = u[i] - (dt / dx) * (c * u[i] - c * rho[i-1])
+        end
+        u = copy(u_next)
+        
+        plot!(x, u)
+        plot!(legend=false)
+        display(plot!)
     end
-    return u
 end
