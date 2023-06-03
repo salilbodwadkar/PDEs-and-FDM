@@ -1,15 +1,23 @@
-function Lax_Friedrich(u0, c, dx, dt, t_final)
-    #u0 is initial condition matrix, c is velocity, dx and dt are space and time steps repsectively
-
-    n = length(u0)
-    nt = Int(t_final / dt)
-
-    u = zeros(n, nt+1)
-    u[:, 1] = u0
+function Lax_Friedrich(u0, c, L, N, dt, t_final)
+    #u0 is initial traffic density, c is advection velocity, L is road legnth, N is # of grid points, dt is time step
+    using Plots
     
-    for i in 1:nt
-        u[:, i+1] = 0.5 * (u[mod1.(1:n-1, n), i] + u[mod1.(2:n, n), i]) - 0.5 * c * dt / dx * (u[mod1.(2:n, n), i] - u[mod1.(1:n-1, n), i])
+    dx = L/N
+    x = range(0, L, length=N+1)
+
+    #Lax-Friedrichs scheme
+    u = copy(u0)
+    plot(x, u, xlim=(0, L), ylim=(0, 1.2), xlabel="Position", ylabel="Density", title="Traffic Density at Time t = 0")
+
+    for t in 0:dt:t_final
+        u_next = zeros(N+1)
+        for i in 2:N
+            u_next[i] = (u[i+1] + u[i-1])/2 - (c*dt/(2*dx))*(u[i+1] - u[i-1])
+        end
+        u = copy(u_next)
+
+        plot!(x, u)
+        plot!(legend=false)
+        display(plot!)
     end
-    
-    return u
 end
