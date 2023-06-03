@@ -1,15 +1,30 @@
-function visc_FTCS(u0, dx, dt, v, t_final)
-    #u0 is initial condition matrix, c is velocity, dx and dt are space and time steps repsectively, v is viscosity coefficient
-    n = length(u0)
+function visc_FTCS(u0, L, N, dt, v, t_final)
+    #u0 is initial traffic density, L is length of road, N is # of grid, dt is time steps, v is viscosity coefficient
     
-    nt = Int(t_final / dt)
+    #note that velocity is not used here; to use it, one must modify the advection and diffusion terms
+    
+    using Plots
 
-    u = zeros(n, nt+1)
-    u[:, 1] = u0
+    dx = L / N
+    x = range(0, L, length=N+1)
 
-    for i in 1:nt
-        u[2:n-1, i+1] = u[2:n-1, i] - 0.5 * dt / dx * (u[3:n, i].^2 - u[1:n-2, i].^2) + v * dt / dx^2 * (u[3:n, i] - 2 * u[2:n-1, i] + u[1:n-2, i])
+    # FTCS for viscous Burgers with advection and diffusion
+    u = copy(u0)
+    plot(x, u, xlim=(0, L), ylim=(0, 2), xlabel="Position", ylabel="Density", title="Traffic Density at Time t = 0")
+
+    for t in 0:dt:t_final
+        u_next = zeros(N+1)
+        for i in 2:N
+            #diffusion term
+            diff = (v / dx^2) * (u[i+1] - 2*u[i] + u[i-1])
+            #advection term
+            adv= (dt / (2*dx)) * (u[i+1]^2 - u[i-1]^2)
+            u_next[i] = u[i] - adv + diff
+        end
+        u = copy(u_next)
+        
+        plot!(x, u)
+        plot!(legend=false)
+        display(plot!)
     end
-
-    return u
 end
