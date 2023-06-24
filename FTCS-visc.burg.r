@@ -7,12 +7,7 @@ visc_FTCS <- function(u0, L, N, dt, v, t_final) {
   dx <- L / N
   x <- seq(0, L, length.out = N + 1)
   
-  # FTCS for viscous Burgers with advection and diffusion
-  u <- u0
-  p <- ggplot() + xlim(0, L) + ylim(0, 2) + xlab("Position") + ylab("Density") + ggtitle("Traffic Density at Time t = 0")
-  p <- p + geom_line(aes(x, u))
-  print(p)
-  
+  # FTCS for viscous Burgers with advection and diffusion  
   for (t in seq(0, t_final, by = dt)) {
     u_next <- rep(0, N + 1)
     for (i in 2:N) {
