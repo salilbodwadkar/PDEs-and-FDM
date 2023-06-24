@@ -6,9 +6,6 @@ function Lax_Friedrich(u0, c, L, N, dt, t_final)
     x = range(0, L, length=N+1)
 
     #Lax-Friedrichs scheme
-    u = copy(u0)
-    plot(x, u, xlim=(0, L), ylim=(0, 1.2), xlabel="Position", ylabel="Density", title="Traffic Density at Time t = 0")
-
     for t in 0:dt:t_final
         u_next = zeros(N+1)
         for i in 2:N
