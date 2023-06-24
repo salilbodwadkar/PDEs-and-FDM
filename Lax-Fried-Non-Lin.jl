@@ -12,9 +12,6 @@ function Lax_Fried_NL(u0, c, L, N, dt, t_final)
    end
 
    # lax-Friedrichs scheme for non-linear advection
-   u = copy(u0)
-   plot(x, u, xlim=(0, L), ylim=(0, 2), xlabel="Position", ylabel="Density", title="Traffic Density at Time t = 0")
-
    for t in 0:dt:t_final
        u_next = zeros(N+1)
        for i in 2:N
