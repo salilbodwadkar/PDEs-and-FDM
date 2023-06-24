@@ -1,6 +1,8 @@
 library(ggplot2)
 
 Lax_Friedrich <- function(u0, c, L, N, dt, t_final) {
+  #u0 is initial traffic density, c is advection velocity, L is road legnth, N is # of grid points, dt is time step
+  
   dx <- L / N
   x <- seq(0, L, length.out = N + 1)
   
