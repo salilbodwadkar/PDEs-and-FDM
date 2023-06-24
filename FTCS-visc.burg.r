@@ -29,14 +29,3 @@ visc_FTCS <- function(u0, L, N, dt, v, t_final) {
     print(p)
   }
 }
-
-# Parameters
-u0 <- rep(1, 100)  # Initial traffic density
-L <- 1  # Length of the road
-N <- 100  # Number of grid points
-dt <- 0.001  # Time step size
-v <- 0.01  # Viscosity coefficient
-t_final <- 1  # Final time
-
-# Solve using FTCS scheme
-visc_FTCS(u0, L, N, dt, v, t_final)
