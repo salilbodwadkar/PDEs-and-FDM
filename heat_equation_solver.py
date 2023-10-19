@@ -43,9 +43,9 @@ def heat_equation_solver(g0, g1, f, t_final, X, T, method):
     elif method == 'CN':
         K = np.eye(X-1) - 0.5*r*A
         for j in range(T):
-            b = np.dot(np.eye(X-1)+0.5*r*A, ingp)
-            b[0] = b[0] + 0.5*r*(g0(t[j])+g0(t[j+1]))
-            b[-1] = b[-1] + 0.5*r*(g1(t[j])+g1(t[j+1]))
+            v = np.dot(np.eye(X-1)+0.5*r*A, ingp)
+            v[0] = v[0] + 0.5*r*(g0(t[j])+g0(t[j+1]))
+            v[-1] = v[-1] + 0.5*r*(g1(t[j])+g1(t[j+1]))
             ingp = np.linalg.solve(K, v)
             u[1:-1,j+1] = ingp
             u[0, j+1] = g0(t[j+1]) 
