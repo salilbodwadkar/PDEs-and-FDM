@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def burgers_custom_scheme(f, X, T, a, t_final):
+def burgers_LF(f, X, T, a, t_final):
     # f = *function* for initial condition
     # 1/X is space step size
     # 1/T is time step size
